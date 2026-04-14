@@ -9,12 +9,12 @@
 <body class="min-h-screen bg-slate-100 text-slate-800">
     <header class="bg-blue-900 text-white shadow-md">
         <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-            <a href="/travo/public/" class="text-2xl font-bold tracking-tight">Travo</a>
+            <a href="<?php echo BASE_URL; ?>/" class="text-2xl font-bold tracking-tight">Travo</a>
 
             <nav class="flex items-center gap-6 text-sm font-medium">
-                <a href="/travo/public/" class="transition hover:text-blue-200">Accueil</a>
-                <a href="/travo/public/projects" class="transition hover:text-blue-200">Chantiers</a>
-                <a href="/travo/public/about" class="transition hover:text-blue-200">À propos</a>
+                <a href="<?php echo BASE_URL; ?>/" class="transition hover:text-blue-200">Accueil</a>
+                <a href="<?php echo BASE_URL; ?>/projects" class="transition hover:text-blue-200">Chantiers</a>
+                <a href="<?php echo BASE_URL; ?>/about" class="transition hover:text-blue-200">À propos</a>
             </nav>
         </div>
     </header>

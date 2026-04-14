@@ -16,12 +16,12 @@
             </p>
 
             <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a href="/travo/public/projects"
+                <a href="<?php echo BASE_URL; ?>/projects"
                    class="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-blue-700">
                     Voir les chantiers
                 </a>
 
-                <a href="/travo/public/about"
+                <a href="<?php echo BASE_URL; ?>/about"
                    class="rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
                     En savoir plus
                 </a>
