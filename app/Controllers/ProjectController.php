@@ -1,9 +1,14 @@
 <?php
 
-class ProjectController {
+class ProjectController extends Controller {
 
     public function index() {
-        echo "<h1>Liste des projets</h1>";
-        echo "<p>Voici la liste de tous les projets.</p>";
+        $projects = [
+            ['title' => 'Rénovation cuisine', 'status' => 'En cours'],
+            ['title' => 'Réfection salle de bain', 'status' => 'En attente'],
+            ['title' => 'Travaux électricité', 'status' => 'Terminé']
+        ];
+
+        $this->view('projects/index', ['projects' => $projects]);
     }
 }
