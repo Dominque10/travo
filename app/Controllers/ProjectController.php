@@ -110,4 +110,20 @@ class ProjectController extends Controller {
         header('Location: ' . BASE_URL . '/projects/' . (int) $id);
         exit;
     }
+
+    public function destroy($id): void
+    {
+        $project = $this->projectModel->getById((int) $id);
+
+        if (!$project) {
+            http_response_code(404);
+            echo "<h1>Projet introuvable</h1>";
+            return;
+        }
+
+        $this->projectModel->delete((int) $id);
+
+        header('Location: ' . BASE_URL . '/projects');
+        exit;
+    }
 }

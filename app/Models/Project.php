@@ -55,4 +55,14 @@ class Project {
             'progress' => $data['progress']
         ]);
     }
+
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM projects WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([
+            'id' => $id
+        ]);
+    }
 }

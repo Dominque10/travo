@@ -56,5 +56,15 @@
         class="inline-flex rounded-xl bg-amber-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-amber-600">
             Modifier le projet
         </a>
+
+        <form action="<?php echo BASE_URL; ?>/projects/<?php echo (int) $project['id']; ?>/delete"
+          method="POST"
+          onsubmit="return confirm('Voulez-vous vraiment supprimer ce projet ?');">
+            <button
+                type="submit"
+                class="inline-flex rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-700">
+                Supprimer le projet
+            </button>
+        </form>
     </div>
 </section>

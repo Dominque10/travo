@@ -12,6 +12,8 @@ $router->post('/projects/store', [$projectController, 'store']); //Ajouter le pr
 $router->get('/projects/{id}/edit', [$projectController, 'edit']);
 $router->post('/projects/{id}/update', [$projectController, 'update']);
 
+$router->post('/projects/{id}/delete', [$projectController, 'destroy']);
+
 $router->get('/projects/{id}', [$projectController, 'show']);
 
 
