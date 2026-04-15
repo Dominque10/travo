@@ -7,3 +7,5 @@ $router->get('/about', [$homeController, 'about']);
 // Routes pour les projets
 $router->get('/projects', [$projectController, 'index']);
 
+$router->get('/projects/{id}', [$projectController, 'show']);
+

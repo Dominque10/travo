@@ -30,7 +30,7 @@
                 </p>
 
                 <div class="mt-6">
-                    <a href="#"
+                    <a href="<?php echo BASE_URL . '/projects/' . $project['id']; ?>"
                        class="inline-flex rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700">
                         Voir le chantier
                     </a>

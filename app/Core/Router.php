@@ -33,6 +33,7 @@ class Router
         }
 
         foreach ($this->routes[$method] as $route) {
+           
             $pattern = preg_replace('#\{[a-zA-Z_][a-zA-Z0-9_]*\}#', '([^/]+)', $route['path']);
             $pattern = '#^' . $pattern . '$#';
 
