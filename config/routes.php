@@ -13,4 +13,7 @@ $router->post('/projects/{id}/update', [$projectController, 'update']);
 $router->post('/projects/{id}/delete', [$projectController, 'destroy']);
 $router->get('/projects/{id}', [$projectController, 'show']);
 
-
+// Routes pour les updates
+$router->get('/projects/{id}/updates', [$updateController, 'index']);
+$router->get('/projects/{id}/updates/create', [$updateController, 'create']);
+$router->post('/projects/{id}/updates/store', [$updateController, 'store']);

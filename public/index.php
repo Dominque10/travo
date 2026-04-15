@@ -13,15 +13,20 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
+//Models
 require_once __DIR__ . '/../app/Models/Project.php';
+require_once __DIR__ . '/../app/Models/ProjectUpdate.php';
 
+//Controllers
 require_once __DIR__ . '/../app/Controllers/HomeController.php';
 require_once __DIR__ . '/../app/Controllers/ProjectController.php';
+require_once __DIR__ . '/../app/Controllers/UpdateController.php';
 
 //2. On crée un objet routeur.
 $router = new Router();
 $homeController = new HomeController();
 $projectController = new ProjectController();
+$updateController = new UpdateController();
 
 
 //3. On charge le fichier de routes.
