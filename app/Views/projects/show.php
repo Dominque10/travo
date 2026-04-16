@@ -46,6 +46,52 @@
         </div>
     </div>
 
+    <section class="mt-10">
+        <h2 class="text-2xl font-bold text-slate-900">Photos</h2>
+
+        <?php if (empty($photos)): ?>
+            <p class="mt-4 text-slate-600">Aucune photo.</p>
+        <?php else: ?>
+            <div class="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                <?php foreach ($photos as $photo): ?>
+                    <article class="rounded-2xl bg-white p-4 shadow ring-1 ring-slate-200">
+                        <img
+                            src="<?php echo BASE_URL; ?>/../storage/uploads/<?php echo htmlspecialchars($photo['stored_name']); ?>"
+                            alt="<?php echo htmlspecialchars($photo['original_name']); ?>"
+                            class="h-56 w-full rounded-xl object-cover"
+                        >
+
+                        <div class="mt-4 flex items-center justify-between gap-3">
+                            <p class="truncate text-sm text-slate-600">
+                                <?php echo htmlspecialchars($photo['original_name']); ?>
+                            </p>
+
+                            <form action="/media/<?php echo (int) $photo['id']; ?>/delete" method="POST">
+                                <button type="submit"
+                                        class="rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-700">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </section>
+
+    <form action="<?php echo BASE_URL; ?>/media/store" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <input type="hidden" name="entity_type" value="project">
+        <input type="hidden" name="entity_id" value="<?php echo (int) $project['id']; ?>">
+        <input type="hidden" name="category" value="photo">
+
+        <input type="file" name="file" class="block w-full rounded-xl border border-slate-300 px-4 py-3">
+        
+        <button type="submit"
+                class="rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700">
+            Ajouter une photo
+        </button>
+    </form>
+
     <div class="flex flex-wrap gap-4">
         <a href="<?php echo BASE_URL; ?>/projects"
         class="inline-flex rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">

@@ -3,10 +3,12 @@
 class ProjectController extends Controller {
 
     private Project $projectModel;
+    private Media $mediaModel;
 
     public function __construct()
     {
         $this->projectModel = new Project();
+        $this->mediaModel = new Media();
     }
 
     public function index() {
@@ -21,11 +23,14 @@ class ProjectController extends Controller {
         $userId = $this->requireAuth();
         $project = $this->projectModel->getByIdForUser($id, $userId);
 
+        $photos = $this->mediaModel->getByEntity('project', (int) $id, 'photo');
+        $documents = $this->mediaModel->getByEntity('project', (int) $id, 'document');
+
         if (!$project) {
             $this->notFound();
         }
 
-        $this->view('projects/show', ['project' => $project]);
+        $this->view('projects/show', ['project' => $project, 'photos' => $photos, 'documents' => $documents ]);
     }
 
     public function create(): void

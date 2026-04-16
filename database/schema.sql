@@ -58,3 +58,18 @@ ALTER TABLE projects
 ADD CONSTRAINT fk_projects_user
 FOREIGN KEY (user_id) REFERENCES users(id)
 ON DELETE CASCADE;
+
+CREATE TABLE media (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    entity_type VARCHAR(100) NOT NULL,
+    entity_id INT NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    original_name VARCHAR(255) NOT NULL,
+    stored_name VARCHAR(255) NOT NULL,
+    mime_type VARCHAR(150) NOT NULL,
+    extension VARCHAR(20) NOT NULL,
+    file_size INT NOT NULL,
+    uploaded_by INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
