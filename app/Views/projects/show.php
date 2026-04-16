@@ -79,6 +79,35 @@
         <?php endif; ?>
     </section>
 
+    <section class="mt-10">
+        <h2 class="text-2xl font-bold text-slate-900">Documents</h2>
+
+        <?php if (empty($documents)): ?>
+            <p class="mt-4 text-slate-600">Aucun document.</p>
+        <?php else: ?>
+            <div class="mt-6 space-y-4">
+                <?php foreach ($documents as $document): ?>
+                    <article class="rounded-2xl bg-white p-4 shadow ring-1 ring-slate-200">
+                        <div class="flex items-center justify-between gap-4">
+                            <a href="/uploads/<?php echo htmlspecialchars($document['stored_name']); ?>"
+                            target="_blank"
+                            class="font-medium text-blue-600 hover:underline">
+                                <?php echo htmlspecialchars($document['original_name']); ?>
+                            </a>
+
+                            <form action="/media/<?php echo (int) $document['id']; ?>/delete" method="POST">
+                                <button type="submit"
+                                        class="rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-700">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </section>
+
     <form action="<?php echo BASE_URL; ?>/media/store" method="POST" enctype="multipart/form-data" class="space-y-4">
         <input type="hidden" name="entity_type" value="project">
         <input type="hidden" name="entity_id" value="<?php echo (int) $project['id']; ?>">
