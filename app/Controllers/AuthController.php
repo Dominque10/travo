@@ -95,9 +95,7 @@ class AuthController extends Controller
         $projectCount = $this->projectModel->countByUserId($userId);
 
         if (!$user) {
-            http_response_code(404);
-            echo "<h1>Utilisateur introuvable</h1>";
-            return;
+            $this->notFound();
         }
 
         $this->view('auth/account', [

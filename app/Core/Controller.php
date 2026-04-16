@@ -34,5 +34,11 @@ class Controller
         }
     }
 
+    protected function notFound(): void
+    {
+        $errorController = new ErrorController();
+        $errorController->notFound();
+    }
+
 
 }

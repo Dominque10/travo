@@ -88,8 +88,7 @@ class Router
 
     private function send404(): void
     {
-        http_response_code(404);
-        echo "<h1>404</h1>";
-        echo "<p>La page demandée n'existe pas.</p>";
+        $errorController = new ErrorController();
+        $errorController->notFound();
     }
 }

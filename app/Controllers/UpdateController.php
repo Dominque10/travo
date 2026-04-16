@@ -17,9 +17,7 @@ class UpdateController extends Controller
         $project = $this->projectModel->getByIdForUser((int) $projectId, $userId);
 
         if (!$project) {
-            http_response_code(404);
-            echo "<h1>Projet introuvable</h1>";
-            return;
+            $this->notFound();
         }
 
         $updates = $this->updateModel->getByProjectId((int) $projectId);
@@ -36,9 +34,7 @@ class UpdateController extends Controller
         $project = $this->projectModel->getByIdForUser((int) $projectId, $userId);
 
         if (!$project) {
-            http_response_code(404);
-            echo "<h1>Projet introuvable</h1>";
-            return;
+            $this->notFound();
         }
 
         $this->view('updates/create', ['project' => $project]);
@@ -50,9 +46,7 @@ class UpdateController extends Controller
         $project = $this->projectModel->getByIdForUser((int) $projectId, $userId);
 
         if (!$project) {
-            http_response_code(404);
-            echo "<h1>Projet introuvable</h1>";
-            return;
+            $this->notFound();
         }
 
         $validator = Validator::make($_POST, [

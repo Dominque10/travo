@@ -22,9 +22,7 @@ class ProjectController extends Controller {
         $project = $this->projectModel->getByIdForUser($id, $userId);
 
         if (!$project) {
-            http_response_code(404);
-            echo "<h1>Projet introuvable</h1>";
-            return;
+            $this->notFound();
         }
 
         $this->view('projects/show', ['project' => $project]);
@@ -73,9 +71,7 @@ class ProjectController extends Controller {
         $project = $this->projectModel->getByIdForUser((int) $id, $userId);
 
         if (!$project) {
-            http_response_code(404);
-            echo "<h1>Projet introuvable</h1>";
-            return;
+            $this->notFound();
         }
 
         $this->view('projects/edit', ['project' => $project]);
@@ -87,9 +83,7 @@ class ProjectController extends Controller {
         $project = $this->projectModel->getByIdForUser((int) $id, $userId);
 
         if (!$project) {
-            http_response_code(404);
-            echo "<h1>Projet introuvable</h1>";
-            return;
+            $this->notFound();
         }
 
         $title = trim($_POST['title'] ?? '');
@@ -128,9 +122,7 @@ class ProjectController extends Controller {
         $project = $this->projectModel->getByIdForUser((int) $id, $userId);
 
         if (!$project) {
-            http_response_code(404);
-            echo "<h1>Projet introuvable</h1>";
-            return;
+            $this->notFound();
         }
 
         $this->projectModel->delete((int) $id);
