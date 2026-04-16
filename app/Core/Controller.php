@@ -10,4 +10,29 @@ class Controller
         require_once __DIR__ . '/../Views/' . $view . '.php';
         require_once __DIR__ . '/../Views/layouts/footer.php';
     }
+
+    protected function redirect(string $path): void
+    {
+        header('Location: ' . BASE_URL . $path);
+        exit;
+    }
+
+    protected function requireAuth(): int
+    {
+        if (!Auth::check()) {
+            Session::setFlash('error', 'Veuillez vous connecter.');
+            $this->redirect('/login');
+        }
+
+        return Auth::id();
+    }
+
+    protected function requireGuest(): void
+    {
+        if (Auth::check()) {
+            $this->redirect('/projects');
+        }
+    }
+
+
 }
