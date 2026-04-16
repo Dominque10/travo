@@ -11,10 +11,24 @@
         <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
             <a href="<?php echo BASE_URL; ?>/" class="text-2xl font-bold tracking-tight">Travo</a>
 
-            <nav class="flex items-center gap-6 text-sm font-medium">
-                <a href="<?php echo BASE_URL; ?>/" class="transition hover:text-blue-200">Accueil</a>
-                <a href="<?php echo BASE_URL; ?>/projects" class="transition hover:text-blue-200">Chantiers</a>
-                <a href="<?php echo BASE_URL; ?>/about" class="transition hover:text-blue-200">À propos</a>
+            <nav class="flex items-center gap-4 text-sm font-medium">
+                <?php if (Auth::check()): ?>
+                    <a href="<?php echo BASE_URL; ?>/projects" class="transition hover:text-blue-200">Mes chantiers</a>
+                    <span class="text-blue-100">
+                        Bonjour <?php echo htmlspecialchars(Auth::user()['name']); ?>
+                    </span>
+
+                    <form action="<?php echo BASE_URL; ?>/logout" method="POST">
+                        <button type="submit" class="rounded-lg bg-white/10 px-4 py-2 hover:bg-white/20">
+                            Déconnexion
+                        </button>
+                    </form>
+                <?php else: ?>
+                    <a href="<?php echo BASE_URL; ?>/login" class="transition hover:text-blue-200">Connexion</a>
+                    <a href="<?php echo BASE_URL; ?>/register" class="rounded-lg bg-white/10 px-4 py-2 hover:bg-white/20">
+                        Inscription
+                    </a>
+                <?php endif; ?>
             </nav>
         </div>
     </header>

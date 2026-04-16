@@ -10,14 +10,16 @@ class ProjectController extends Controller {
     }
 
     public function index() {
-        $projects = $this->projectModel->getAll();
+        $userId = $this->requireAuth();
+        $projects = $this->projectModel->getAllByUserId($userId);
 
         $this->view('projects/index', ['projects' => $projects]);
     }
 
     public function show($id): void
     {   
-        $project = $this->projectModel->getById($id);
+        $userId = $this->requireAuth();
+        $project = $this->projectModel->getByIdForUser($id, $userId);
 
         if (!$project) {
             http_response_code(404);
@@ -29,11 +31,14 @@ class ProjectController extends Controller {
     }
 
     public function create(): void
-    {
+    {   
+        $userId = $this->requireAuth();
         $this->view('projects/create');
     }
 
     function store(): void{
+
+        $userId = $this->requireAuth();
         $validator = Validator::make($_POST, [
             'title' => 'required|max:255',
             'status' => 'required|in:En cours,Terminé,En attente',
@@ -44,8 +49,7 @@ class ProjectController extends Controller {
         if ($validator->fails()) {
             $errors = $validator->errors();
             Notification::setFlash('error', implode('<br>', $errors));
-            header('Location: ' . BASE_URL . '/projects/create');
-            exit;
+            $this->redirect('/projects/create');
         }
 
         if(!$this->projectModel->create([
@@ -55,18 +59,18 @@ class ProjectController extends Controller {
             'progress' => $progress
         ])) {
             Notification::setFlash('error', 'Une erreur est survenue lors de la création du projet.');
-            header('Location: ' . BASE_URL . '/projects/create');
-            exit;
+            $this->redirect('/projects/create');
         }
 
         Notification::setFlash('success', 'Projet créé avec succès.');
-        header('Location: '. BASE_URL . '/projects');
+        $this->redirect('/projects');
         exit;
     }
 
     public function edit($id): void
-    {
-        $project = $this->projectModel->getById((int) $id);
+    {   
+        $userId = $this->requireAuth();
+        $project = $this->projectModel->getByIdForUser((int) $id, $userId);
 
         if (!$project) {
             http_response_code(404);
@@ -79,7 +83,8 @@ class ProjectController extends Controller {
 
     public function update($id): void
     {
-        $project = $this->projectModel->getById((int) $id);
+        $userId = $this->requireAuth();
+        $project = $this->projectModel->getByIdForUser((int) $id, $userId);
 
         if (!$project) {
             http_response_code(404);
@@ -102,7 +107,7 @@ class ProjectController extends Controller {
         if ($validator->fails()) {
             $errors = $validator->errors();
             Notification::setFlash('error', implode('<br>', $errors));
-            header('Location: ' . BASE_URL . '/projects/edit/' . (int) $id);
+            $this->redirect('/projects/edit/' . (int) $id);
             exit;
         }
 
@@ -114,13 +119,13 @@ class ProjectController extends Controller {
         ]);
 
         Notification::setFlash('success', 'Projet mis à jour avec succès.');
-        header('Location: ' . BASE_URL . '/projects/' . (int) $id);
-        exit;
+        $this->redirect('/projects/' . (int) $id);
     }
 
     public function destroy($id): void
     {
-        $project = $this->projectModel->getById((int) $id);
+        $userId = $this->requireAuth();
+        $project = $this->projectModel->getByIdForUser((int) $id, $userId);
 
         if (!$project) {
             http_response_code(404);
@@ -131,7 +136,6 @@ class ProjectController extends Controller {
         $this->projectModel->delete((int) $id);
 
         Notification::setFlash('success', 'Projet supprimé avec succès.');
-        header('Location: ' . BASE_URL . '/projects');
-        exit;
+        $this->redirect('/projects');
     }
 }

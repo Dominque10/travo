@@ -11,9 +11,10 @@ class UpdateController extends Controller
         $this->updateModel = new ProjectUpdate();
     }
 
-    public function index($projectId): void
+     public function index($projectId): void
     {
-        $project = $this->projectModel->getById((int) $projectId);
+        $userId = $this->requireAuth();
+        $project = $this->projectModel->getByIdForUser((int) $projectId, $userId);
 
         if (!$project) {
             http_response_code(404);
@@ -31,7 +32,8 @@ class UpdateController extends Controller
 
     public function create($projectId): void
     {
-        $project = $this->projectModel->getById((int) $projectId);
+        $userId = $this->requireAuth();
+        $project = $this->projectModel->getByIdForUser((int) $projectId, $userId);
 
         if (!$project) {
             http_response_code(404);
@@ -39,14 +41,13 @@ class UpdateController extends Controller
             return;
         }
 
-        $this->view('updates/create', [
-            'project' => $project
-        ]);
+        $this->view('updates/create', ['project' => $project]);
     }
 
     public function store($projectId): void
     {
-        $project = $this->projectModel->getById((int) $projectId);
+        $userId = $this->requireAuth();
+        $project = $this->projectModel->getByIdForUser((int) $projectId, $userId);
 
         if (!$project) {
             http_response_code(404);
@@ -61,8 +62,7 @@ class UpdateController extends Controller
 
         if ($validator->fails()) {
             Notification::setFlash('error', $validator->firstError());
-            header('Location: ' . BASE_URL . '/projects/' . (int) $projectId . '/updates/create');
-            exit;
+            $this->redirect('/projects/' . (int) $projectId . '/updates/create');
         }
 
         $data = $validator->validated();
@@ -71,7 +71,6 @@ class UpdateController extends Controller
         $this->updateModel->create($data);
 
         Notification::setFlash('success', 'L’update a bien été ajoutée.');
-        header('Location: ' . BASE_URL . '/projects/' . (int) $projectId . '/updates');
-        exit;
+        $this->redirect('/projects/' . (int) $projectId . '/updates');
     }
 }

@@ -14,6 +14,35 @@ class Project {
         return $stmt->fetchAll();
     }
 
+    public function getAllByUserId(int $userId): array
+    {
+        $sql = "SELECT * FROM projects
+                WHERE user_id = :user_id
+                ORDER BY id DESC";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+
+        return $stmt->fetchAll();
+    }
+
+    public function getByIdForUser(int $id, int $userId): ?array
+    {
+        $sql = "SELECT * FROM projects
+                WHERE id = :id AND user_id = :user_id
+                LIMIT 1";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            'id' => $id,
+            'user_id' => $userId,
+        ]);
+
+        $project = $stmt->fetch();
+
+        return $project ?: null;
+    }
+
     public function getById(int $id): ?array
     {
         $stmt = $this->pdo->prepare("SELECT * FROM projects WHERE id = ?");

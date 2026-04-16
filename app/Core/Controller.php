@@ -20,7 +20,7 @@ class Controller
     protected function requireAuth(): int
     {
         if (!Auth::check()) {
-            Session::setFlash('error', 'Veuillez vous connecter.');
+            Notification::setFlash('error', 'Veuillez vous connecter.');
             $this->redirect('/login');
         }
 
