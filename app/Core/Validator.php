@@ -58,7 +58,7 @@ class Validator
 
             case 'min':
                 $min = (int) ($params[0] ?? 0);
-                if (trim((string) $value) !== '' && mb_strlen(trim((string) $value)) < $min) {
+                if (trim((string) $value) !== ''  mb_strlen(trim((string) $value)) < $min) {
                     $this->errors[$field] = "Le champ {$field} doit contenir au moins {$min} caractères.";
                 }
                 break;
