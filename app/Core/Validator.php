@@ -29,7 +29,7 @@ class Validator
                 $ruleName = $rule;
                 $params = [];
 
-                if (str_contains($rule, ':')) {
+                if (strpos($rule, ':') !== false) {
                     [$ruleName, $paramString] = explode(':', $rule, 2);
                     $params = explode(',', $paramString);
                 }
@@ -43,7 +43,7 @@ class Validator
         }
     }
 
-    private function applyRule(string $field, mixed $value, string $ruleName, array $params = []): void
+    private function applyRule(string $field, $value, string $ruleName, array $params = []): void
     {
         if (isset($this->errors[$field])) {
             return;
