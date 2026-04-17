@@ -73,3 +73,66 @@ CREATE TABLE media (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE decisions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    project_id INT NOT NULL,
+    user_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'draft',
+    response_comment TEXT NULL,
+    validated_at TIMESTAMP NULL DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_decisions_project
+        FOREIGN KEY (project_id) REFERENCES projects(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_decisions_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+CREATE INDEX idx_decisions_project_status ON decisions(project_id, status);
+
+CREATE TABLE decision_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    decision_id INT NOT NULL,
+    user_id INT NOT NULL,
+    from_status VARCHAR(20) NOT NULL,
+    to_status VARCHAR(20) NOT NULL,
+    message VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_decision_logs_decision
+        FOREIGN KEY (decision_id) REFERENCES decisions(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_decision_logs_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+CREATE INDEX idx_decision_logs_decision_created ON decision_logs(decision_id, created_at);
+
+INSERT INTO decisions (project_id, user_id, title, description, status, response_comment, validated_at) VALUES
+(1, 1, 'Choix du carrelage cuisine', 'Valider le modele de carrelage 60x60 pour la cuisine.', 'pending', NULL, NULL),
+(1, 1, 'Validation plan ilot central', 'Validation du plan technique final de l ilot central.', 'approved', 'Plan valide apres ajustement des prises.', '2026-04-10 14:20:00'),
+(2, 1, 'Selection faience salle de bain', 'Comparer trois references de faience murale avant commande.', 'rejected', 'Teinte trop foncee, merci de proposer une alternative claire.', NULL),
+(3, 1, 'Ajout ligne budget securite', 'Ajouter un budget complementaire pour remplacement disjoncteurs.', 'draft', NULL, NULL),
+(4, 1, 'Annulation variante cloison', 'Abandonner la variante de cloison amovible pour cause de cout.', 'cancelled', 'Variante annulee suite arbitrage budget.', NULL);
+
+INSERT INTO decision_logs (decision_id, user_id, from_status, to_status, message) VALUES
+(1, 1, 'draft', 'draft', 'Decision creee en brouillon.'),
+(1, 1, 'draft', 'pending', 'Decision envoyee en validation.'),
+
+(2, 1, 'draft', 'draft', 'Decision creee en brouillon.'),
+(2, 1, 'draft', 'pending', 'Decision envoyee en validation.'),
+(2, 1, 'pending', 'approved', 'Decision approuvee.'),
+
+(3, 1, 'draft', 'draft', 'Decision creee en brouillon.'),
+(3, 1, 'draft', 'pending', 'Decision envoyee en validation.'),
+(3, 1, 'pending', 'rejected', 'Decision rejetee.'),
+
+(4, 1, 'draft', 'draft', 'Decision creee en brouillon.'),
+
+(5, 1, 'draft', 'draft', 'Decision creee en brouillon.'),
+(5, 1, 'draft', 'cancelled', 'Decision annulee.');
+

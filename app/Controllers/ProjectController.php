@@ -55,11 +55,17 @@ class ProjectController extends Controller {
             $this->redirect('/projects/create');
         }
 
+        $title = trim($_POST['title'] ?? '');
+        $status = trim($_POST['status'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $progress = (int) ($_POST['progress'] ?? 0);
+
         if(!$this->projectModel->create([
             'title' => $title,
             'status' => $status,
             'description' => $description,
-            'progress' => $progress
+            'progress' => $progress,
+            'user_id' => $userId
         ])) {
             Notification::setFlash('error', 'Une erreur est survenue lors de la création du projet.');
             $this->redirect('/projects/create');

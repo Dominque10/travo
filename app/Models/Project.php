@@ -52,8 +52,8 @@ class Project {
 
     public function create(array $data): bool
     {
-        $sql = "INSERT INTO projects (title, status, description, progress)
-                VALUES (:title, :status, :description, :progress)";
+        $sql = "INSERT INTO projects (title, status, description, progress, user_id)
+                VALUES (:title, :status, :description, :progress, :user_id)";
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -61,7 +61,8 @@ class Project {
             'title' => $data['title'],
             'status' => $data['status'],
             'description' => $data['description'],
-            'progress' => $data['progress']
+            'progress' => $data['progress'],
+            'user_id' => $data['user_id']
         ]);
     }
 

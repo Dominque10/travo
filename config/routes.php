@@ -18,6 +18,14 @@ $router->get('/projects/{id}/updates', [UpdateController::class, 'index']);
 $router->get('/projects/{id}/updates/create', [UpdateController::class, 'create']);
 $router->post('/projects/{id}/updates/store', [UpdateController::class, 'store']);
 
+// Routes pour les decisions
+$router->get('/projects/{id}/decisions', [DecisionController::class, 'index']);
+$router->get('/projects/{id}/decisions/create', [DecisionController::class, 'create']);
+$router->post('/projects/{id}/decisions/store', [DecisionController::class, 'store']);
+$router->get('/projects/{id}/decisions/{decisionId}', [DecisionController::class, 'show']);
+$router->post('/projects/{id}/decisions/{decisionId}/update', [DecisionController::class, 'update']);
+$router->post('/projects/{id}/decisions/{decisionId}/transition', [DecisionController::class, 'transition']);
+
 // Routes pour la connexion et l'inscription
 $router->get('/register', [AuthController::class, 'showRegister']);
 $router->post('/register', [AuthController::class, 'register']);

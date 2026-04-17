@@ -6,7 +6,7 @@
     <title>Travo</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="min-h-screen bg-slate-100 text-slate-800">
+<body class="flex min-h-screen flex-col bg-slate-100 text-slate-800">
     <header class="bg-blue-900 text-white shadow-md">
         <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
             <a href="<?php echo BASE_URL; ?>/" class="text-2xl font-bold tracking-tight">Travo</a>
@@ -34,7 +34,7 @@
         </div>
     </header>
 
-    <main class="mx-auto max-w-6xl px-6 py-10">
+    <main class="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
         <?php $flash = Notification::getFlash(); ?>
 
         <?php if ($flash): ?>
@@ -44,7 +44,7 @@
                     : 'border-red-200 bg-red-50 text-red-800';
             ?>
 
-            <div class="mb-6 rounded-2xl border px-5 py-4 shadow-sm <?php echo $flashClasses; ?>">
+            <div class="mx-auto mb-6 w-full max-w-4xl rounded-2xl border px-5 py-4 shadow-sm <?php echo $flashClasses; ?>">
                 <p class="font-medium">
                     <?php echo htmlspecialchars($flash['message']); ?>
                 </p>

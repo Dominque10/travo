@@ -4,17 +4,17 @@ class Router
 {
     private array $routes = [];
 
-    public function get(string $path, callable|array $action): void
+    public function get(string $path, $action): void
     {
         $this->addRoute('GET', $path, $action);
     }
 
-    public function post(string $path, callable|array $action): void
+    public function post(string $path, $action): void
     {
         $this->addRoute('POST', $path, $action);
     }
 
-    private function addRoute(string $method, string $path, callable|array $action): void
+    private function addRoute(string $method, string $path, $action): void
     {
         $path = $this->normalize($path);
 
@@ -48,7 +48,7 @@ class Router
         $this->send404();
     }
 
-    private function runAction(callable|array $action, array $params = []): void
+    private function runAction($action, array $params = []): void
     {
         if (is_array($action) && isset($action[0], $action[1]) && is_string($action[0])) {
             $controllerName = $action[0];
@@ -79,6 +79,11 @@ class Router
 
         if ($scriptDir !== '/' && $scriptDir !== '.' && strpos($path, $scriptDir) === 0) {
             $path = substr($path, strlen($scriptDir));
+        }
+
+        // Accepte les URLs du type /index.php/route quand mod_rewrite est inactif.
+        if (strpos($path, '/index.php') === 0) {
+            $path = substr($path, strlen('/index.php'));
         }
 
         $path = '/' . trim($path, '/');

@@ -63,6 +63,13 @@ class Validator
                 }
                 break;
 
+            case 'max':
+                $max = (int) ($params[0] ?? 0);
+                if (trim((string) $value) !== '' && mb_strlen(trim((string) $value)) > $max) {
+                    $this->errors[$field] = "Le champ {$field} ne doit pas dépasser {$max} caractères.";
+                }
+                break;
+
             case 'email':
                 if (trim((string) $value) !== '' && !filter_var(trim((string) $value), FILTER_VALIDATE_EMAIL)) {
                     $this->errors[$field] = "L’adresse email est invalide.";
